@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserCreateRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -16,14 +15,10 @@ class UserController extends Controller
 
     public function index()
     {
-        if (auth()->user()->role == 1) {
-            $users = User::all();
-            return view('admin.users.index', [
-                'users' => $users,
-            ]);
-        } else {
-            return redirect('sign_in');
-        }
+        $users = User::all();
+        return view('admin.users.index', [
+            'users' => $users,
+        ]);
 
     }
 
@@ -60,7 +55,7 @@ class UserController extends Controller
         return view('admin.users.edit')->with('user', $user);
     }
 
-    public function update(Request $request, $id)
+    public function update(UserCreateRequest $request, $id)
     {
         User::where('id', $id)
             ->update([
