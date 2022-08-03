@@ -23,22 +23,8 @@
         <div class="form-group">
             <label for="role">Roles</label>
             <select name="role" class="form-control" id="status">
-                <?php
-                $selected_active = '';
-                $selected_disabled = '';
-                if (Request::old('role') !== null) {
-                    switch (Request::old('role')) {
-                        case 0:
-                            $selected_disabled = 'selected';
-                            break;
-                        case 1:
-                            $selected_active = 'selected';
-                            break;
-                    }
-                }
-                ?>
-                <option value="0" <?php echo $selected_disabled; ?>>User</option>
-                <option value="1" <?php echo $selected_active ?>>Admin</option>
+                <option value="0" @if($user->role == 0) selected="selected" @endif>User</option>
+                <option value="1" @if($user->role == 1) selected="selected" @endif>Admin</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>

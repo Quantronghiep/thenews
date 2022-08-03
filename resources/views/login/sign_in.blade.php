@@ -48,7 +48,7 @@
         <div class="alert alert-danger text-da" style="color: red"> {{ session('error') }}  </div>
     @endif
     @if ( session('success'))
-        <div class="alert alert-danger text-da" style="color: green"> {{ session('success') }}  </div>
+        <div class="alert alert-success text-da" style="color: green"> {{ session('success') }}  </div>
     @endif
     @if ($errors->any())
         <ul>

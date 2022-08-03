@@ -1,25 +1,19 @@
-@extends('login.layout_login')
+@extends('login.layout_forgot_password')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+    <div class="bg-light p-5 rounded">
+        <h1>Dashboard</h1>
+        @if ( session('message'))
+            <div class="alert alert-success " style="color: green"> {{ session('message') }}  </div>
+        @endif
 
-                    <div class="card-body">
-                        @if (session('resent'))
-                            <div class="alert alert-success" role="alert">
-                                {{ __('A fresh verification link has been sent to your email address.') }}
-                            </div>
-                        @endif
-
-                        {{ __('Before proceeding, please check your email for a verification link.') }}
-                        {{ __('If you did not receive the email') }}, <a
-                            href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
-                    </div>
-                </div>
-            </div>
-        </div>
+        Before proceeding, please check your email for a verification link. If you did not receive the email,
+        <form action="{{ route('verification.send') }}" method="POST" class="d-inline">
+            @csrf
+            <button type="submit" class="d-inline btn btn-link p-0">
+                click here to request another
+            </button>
+            .
+        </form>
     </div>
 @endsection
