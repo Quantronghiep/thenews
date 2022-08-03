@@ -20,12 +20,12 @@ class AdminLoginMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check()) {
-            if (Auth::user()->is_admin == 1) {
+            if (Auth::user()->role == 1) {
                 return $next($request);
             }
-            return redirect()->route('admin.auth.login')->with('error', 'Permission denied');
+            return redirect()->route('home')->with('error', 'Permission denied');
         }
-        return redirect()->route('admin.auth.login')->with('error', 'Permission denied');
+        return redirect()->route('sign_in')->with('error', 'Permission denied');
     }
 
 
