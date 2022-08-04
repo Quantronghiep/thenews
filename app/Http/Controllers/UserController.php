@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserCreateRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -15,7 +17,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(10);
         return view('admin.users.index', [
             'users' => $users,
         ]);
@@ -55,12 +57,17 @@ class UserController extends Controller
         return view('admin.users.edit')->with('user', $user);
     }
 
-    public function update(UserCreateRequest $request, $id)
+    public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'password' => 'required',
+        ]);
+        $user = User::find($id);
         User::where('id', $id)
             ->update([
                 'name' => $request->input('name'),
-                'email' => $request->input('email'),
+                'email' => $user->email,
                 'password' => Hash::make($request['password']),
                 'role' => $request['role'],
             ]);
