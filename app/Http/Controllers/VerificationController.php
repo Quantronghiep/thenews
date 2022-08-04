@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Foundation\Auth\VerifiesEmails;
-use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
@@ -18,6 +17,8 @@ class VerificationController extends Controller
     | be re-sent if the user didn't receive the original email message.
     |
     */
+
+    //file nay khong dung
 
     use VerifiesEmails, RedirectsUsers;
 
