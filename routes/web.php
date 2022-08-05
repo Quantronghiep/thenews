@@ -4,6 +4,9 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Web\UserLoginController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/admin', UserController::class)->middleware('auth');
+Route::resource('/admin', UserController::class)->middleware(['auth', 'check_admin']);//->middleware('verified');
 
+//Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/detail', [HomeController::class, 'detail'])->name('detail');
@@ -36,7 +40,23 @@ Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPa
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
-//Route::get('/email/verify', 'VerificationController@show')->name('verification.notice');
-//Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify')->middleware(['signed']);
-//Route::post('/email/resend', 'VerificationController@resend')->name('verification.resend');
+Route::get('/email/verify', function () {
+    return view('login.verify');
+})->middleware('auth')->name('verification.notice');
 
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/')->with('success', 'Xác thực thành công');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::prefix('web')->group(function () {
+    Route::get('profile/{id}', [UserLoginController::class, 'profile'])->middleware('verified')->name('web.profile');
+});
