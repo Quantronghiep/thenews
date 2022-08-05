@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Carbon\Carbon;
-use DB;
-use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Mail;
 
 class ForgotPasswordController extends Controller
 {
@@ -74,11 +75,16 @@ class ForgotPasswordController extends Controller
             return back()->withInput()->with('error', 'Invalid token!');
         }
 
-        $user = User::where('email', $request->email)
+        //update bang Users
+        User::where('email', $request->email)
             ->update(['password' => Hash::make($request->password)]);
 
-        DB::table('password_resets')->where(['email' => $request->email])->delete();
 
-        return redirect('/sign_in')->with('success', 'Your password has been changed!');
+        DB::table('password_resets')->where(['email' => $request->email])->delete();
+        // luu lai nguoi dang nhap
+        Auth::attempt(['email' => $request->email,
+            'password' => $request->password,
+        ]);
+        return redirect()->route('home')->with('success', 'Your password has been changed!');
     }
 }
