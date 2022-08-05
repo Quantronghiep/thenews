@@ -44,6 +44,9 @@ class LoginController extends Controller
 
     public function sign_up()
     {
+        if (auth()->check()) {
+            return redirect('/');
+        }
         return view('login.sign_up');
     }
 
