@@ -31,7 +31,8 @@
                        placeholder="SEARCH">
             </div>
             @if( auth()->check() )
-                <a href="#" class="rounded bg-gray-300 lg:py-2 lg:px-8">Xin chao {{ auth()->user()->name }}</a>
+                <a href="/web/profile/{{ auth()->user()->id }}" class="rounded bg-gray-300 lg:py-2 lg:px-8">Xin
+                    chao {{ auth()->user()->name }}</a>
                 <a href="#" class="rounded bg-gray-300 lg:py-2 lg:px-8 hidden ">Login</a>
                 <a href="{{ route('log_out') }}" class="rounded bg-gray-300 lg:py-2 lg:px-8 lg:ml-4">Logout</a>
             @else
