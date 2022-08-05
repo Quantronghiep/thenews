@@ -38,4 +38,6 @@
             </tr>
         @endforeach
     </table>
+    <div class="d-flex justify-content-center">    {{ $users->onEachSide(1)->links() }}</div>
+
 @endsection
