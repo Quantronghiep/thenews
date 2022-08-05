@@ -4,7 +4,7 @@
 
 @section('content')
     @if ( session('success'))
-        <div class="alert alert-success text-da" style="color: green"> {{ session('success') }}  </div>
+        <div class="btn btn-blue" style="color: green"> {{ session('success') }}  </div>
     @endif
     <div class="app_container lg:pb-16 lg:border-b-2 border-gray-200 ">
         @include('user.layouts.navigation')
