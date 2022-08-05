@@ -44,12 +44,12 @@
 
     </div>
     @if ( session('error'))
-        <div class="alert alert-danger text-danger" style="color: red"> {{ session('error') }}  </div>
+        <div class="btn btn-red" style="color: red"> {{ session('error') }}  </div>
     @endif
     @if ($errors->any())
-        <ul>
+        <ul class="mt-4 mx-auto">
             @foreach ($errors->all() as $error)
-                <li class="text-danger text-xl text-red-500">{{ $error }}</li>
+                <li class="text-danger text-xl text-red-500 mt-2">{{ $error }}</li>
             @endforeach
         </ul>
     @endif
