@@ -37,7 +37,7 @@ class LoginController extends Controller
     public function sign_in()
     {
         if (auth()->check()) {
-            return redirect('/')->with('success', 'Da dang nhap roi ');
+            return redirect('/');
         }
         return view('login.sign_in');
     }

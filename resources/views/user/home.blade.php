@@ -6,6 +6,9 @@
     @if ( session('success'))
         <div class="btn btn-blue" style="color: green"> {{ session('success') }}  </div>
     @endif
+    @if ( session('error'))
+        <div class="alert alert-danger text-danger" style="color: red"> {{ session('error') }}  </div>
+    @endif
     <div class="app_container lg:pb-16 lg:border-b-2 border-gray-200 ">
         @include('user.layouts.navigation')
 
