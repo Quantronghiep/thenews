@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserCreateRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -35,6 +36,9 @@ class LoginController extends Controller
 
     public function sign_in()
     {
+        if (auth()->check()) {
+            return redirect('/')->with('success', 'Da dang nhap roi ');
+        }
         return view('login.sign_in');
     }
 
@@ -59,9 +63,12 @@ class LoginController extends Controller
             'role' => 0,
         ]);
 
-//        event(new Registered($user));
-        Auth::login($user);
-        $success = 'Dang ki thanh cong';
+        event(new Registered($user));
+        // luu lai nguoi dang nhap
+        Auth::attempt(['email' => $request->email,
+            'password' => $request->password,
+        ]);
+        $success = 'Đăng kí thành công, kiểm tra email để xác thực tài khoản';
 
         return redirect('/')->with('success', $success);
 
@@ -72,6 +79,6 @@ class LoginController extends Controller
     {
         Session::flush();
         Auth::logout();
-        return redirect('/sign_in');
+        return redirect('/');
     }
 }
