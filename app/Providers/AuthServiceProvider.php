@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
+
+//use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,19 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+//        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+//            return (new MailMessage)
+//                ->subject('Verify Email Address')
+//                ->line('An vao day de xac nhan dang ki tai khoan')
+//                ->action('Verify Email Address', $url);
+//        });
+//
+//        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+//            return (new MailMessage)
+//                ->subject('Verify Email Address')
+//                ->line('An vao day de xac nhan dang ki tai khoan')
+//                ->markdown('login.verification', ['url' => $url]);
+//        });
+
     }
 }
