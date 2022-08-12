@@ -28,11 +28,13 @@
             <button class="text-center text-2xl bg-black w-full text-white py-2  mt-12 hover:text-gray-200">Login
             </button>
             <div class="flex mt-6 justify-between">
-                <a class="flex border-2 px-4 lg:px-8 py-2 text-blue-700 hover:cursor-pointer hover:bg-gray-200 ">
+                <a href=" {{ route('login.facebook') }} "
+                   class="flex border-2 px-4 lg:px-8 py-2 text-blue-700 hover:cursor-pointer hover:bg-gray-200 ">
                     <i class="fab fa-facebook-square  my-auto"></i>
                     <h1 class="ml-4 font-semibold">Facebook</h1>
                 </a>
-                <a class="flex border-2 px-4 lg:px-8 py-2 text-blue-700 hover:cursor-pointer hover:bg-gray-200 ">
+                <a href=" {{ route('login.google') }} "
+                   class="flex border-2 px-4 lg:px-8 py-2 text-blue-700 hover:cursor-pointer hover:bg-gray-200 ">
                     <img src="{{ asset('storage/google-18px.svg') }}" alt="">
                     <h1 class="ml-4 font-semibold">Google</h1>
                 </a>
