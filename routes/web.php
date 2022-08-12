@@ -3,7 +3,6 @@
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\Web\UserLoginController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -20,9 +19,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/admin', UserController::class)->middleware(['auth', 'check_admin']);//->middleware('verified');
+//Route::resource('/admin', UserController::class)->middleware(['auth', 'check_admin']);//->middleware('verified');
 
 //Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/detail', [HomeController::class, 'detail'])->name('detail');
@@ -56,6 +57,16 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+//facebook login
+Route::get('/auth/facebook/redirect', [LoginController::class, 'redirectToFacebook'])->name('login.facebook');
+
+Route::get('/auth/facebook/callback', [LoginController::class, 'handleFacebookCallback']);
+
+//google login
+Route::get('/auth/google/redirect', [LoginController::class, 'redirectToGoogle'])->name('login.google');
+
+Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
 
 Route::prefix('web')->group(function () {
     Route::get('profile/{id}', [UserLoginController::class, 'profile'])->middleware('verified')->name('web.profile');
