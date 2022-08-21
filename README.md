@@ -1,4 +1,4 @@
-# Task D : Tạo chức năng đăng ký, đăng nhập đăng xuất:
+# Website tin tuc
 
 - Thực hiện bởi QUẢN TRỌNG HIỆP
 
